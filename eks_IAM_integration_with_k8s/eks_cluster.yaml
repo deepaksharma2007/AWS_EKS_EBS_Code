@@ -1,0 +1,21 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: deepak-eks-cluster
+  region: ap-south-1
+
+nodeGroups:
+  - name: ng1-public
+    instanceType: t2.small
+    instanceName: custom-node-name
+    volumeSize: 10
+    desiredCapacity: 2
+    ssh:
+      allow: true
+  - name: ng2-private
+    instanceType: t2.small
+    desiredCapacity: 3
+    volumeSize: 8
+    ssh:
+      allow: true
