@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: php-deployment
+spec:
+   replicas: 3
+   selector:
+      matchLabels:
+           env: production
+   template:
+      metadata:
+         name: "mypod2"
+         labels:
+            env: production
+      spec:
+          containers:
+           - name: "myc1"
+             image: "deepak2007/apache_php"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+    name: mylb1
+spec:
+    type: NodePort
+    selector:
+        env: production
+    ports:
+      - targetPort: 80
+        port: 80
+        nodePort: 30000
