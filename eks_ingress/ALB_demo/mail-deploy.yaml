@@ -8,7 +8,7 @@ spec:
       matchLabels:
            app: mail
       matchExpressions:
-      - {key: app, operator: In, values: [ search ] }
+      - {key: app, operator: In, values: [ mail ] }
    template:
       metadata:
          name: "mail-pod"
