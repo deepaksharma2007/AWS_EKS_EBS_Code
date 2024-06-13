@@ -75,7 +75,7 @@ data:
         "metrics_collected": {
           "kubernetes": {
              "cluster_name": "mycluster",
-             "metrics_collection_interval": 60
+             "metrics_collection_interval": 60,
               "namespace": {
                 "name": "K8S_NAMESPACE"
             }
