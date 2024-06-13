@@ -27,7 +27,7 @@ rules:
   resources: ["nodes/proxy"]
   verbs: ["get"]
 - apiGroups: [""]
-  resources: ["pods"]
+  resources: ["*"]
   verbs: ["list", "watch"]
 
 ---
