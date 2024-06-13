@@ -76,6 +76,7 @@ data:
           "kubernetes": {
              "cluster_name": "mycluster",
              "metrics_collection_timeout": 60,
+             "pod_collection_type": "grouped",
              "metrics_collection_interval": 60,
               "namespace": {
                 "name": "K8S_NAMESPACE"
