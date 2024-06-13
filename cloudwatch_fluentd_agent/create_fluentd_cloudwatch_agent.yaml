@@ -13,27 +13,39 @@ kind: ServiceAccount
 metadata:
   name: cloudwatch-agent
   namespace: amazon-cloudwatch
-
-
 ---
-# Create Role for Cloud watch agent 
+# Create ClusterRole for Cloud watch agent 
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: cloudwatch-agent-role
   namespace: amazon-cloudwatch
 rules:
 - apiGroups: [""]
+  resources: ["pods" , "nodes" , "endpoints"]
+  verbs: ["list", "watch"]
+- apiGroups: ["apps"]
+  resources: ["replicasets"]
+  verbs: ["list", "watch"]
+- apiGroups: ["batch"]
+  resources: ["jobs"]
+  verbs: ["list", "watch"]
+- apiGroups: [""]
   resources: ["nodes/proxy"]
   verbs: ["get"]
 - apiGroups: [""]
-  resources: ["*"]
-  verbs: ["list", "watch"]
+  resources: ["nodes/stats", "configmaps" , "events"]
+  verbs: ["create"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "update"]
+  resourceNames: ["cwagent-clusterleader"]
+
 
 ---
 # create rolebinding for  cw agent
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   name: cloudwatch-agent-rolebinding
   namespace: amazon-cloudwatch
@@ -42,7 +54,7 @@ subjects:
   name: cloudwatch-agent
   namespace: amazon-cloudwatch
 roleRef:
-  kind: Role
+  kind: ClusterRole
   name: cloudwatch-agent-role
   apiGroup: rbac.authorization.k8s.io
 
