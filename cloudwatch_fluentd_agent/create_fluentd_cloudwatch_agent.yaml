@@ -7,6 +7,46 @@ metadata:
     name: amazon-cloudwatch
 
 ---
+# create service account for cloudwatch agent
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cloudwatch-agent
+  namespace: amazon-cloudwatch
+
+
+---
+# Create Role for Cloud watch agent 
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: cloudwatch-agent-role
+  namespace: amazon-cloudwatch
+rules:
+- apiGroups: [""]
+  resources: ["nodes/proxy"]
+  verbs: ["get"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "watch"]
+
+---
+# create rolebinding for  cw agent
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cloudwatch-agent-rolebinding
+  namespace: amazon-cloudwatch
+subjects:
+- kind: ServiceAccount
+  name: cloudwatch-agent
+  namespace: amazon-cloudwatch
+roleRef:
+  kind: Role
+  name: cloudwatch-agent-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
 
 # create configmap for cwagent config
 apiVersion: v1
@@ -51,6 +91,7 @@ spec:
       labels:
         name: cloudwatch-agent
     spec:
+      serviceAccountName: cloudwatch-agent
       containers:
         - name: cloudwatch-agent
           image: public.ecr.aws/cloudwatch-agent/cloudwatch-agent:1.300032.3b392
