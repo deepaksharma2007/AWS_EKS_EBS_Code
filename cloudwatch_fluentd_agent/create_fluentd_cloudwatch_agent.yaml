@@ -75,10 +75,22 @@ spec:
           volumeMounts:
             - name: cwagentconfig
               mountPath: /etc/cwagentconfig
+            - name: rootfs
+              mountPath: /rootfs
+              readOnly: true
+            - name: proc
+              mountPath: /rootfs/proc
+              readOnly: true
       volumes:
         - name: cwagentconfig
           configMap:
             name: cwagentconfig
+        - name: rootfs
+          hostPath:
+            path: /
+        - name: proc
+          hostPath:
+            path: /proc
       terminationGracePeriodSeconds: 60
 
 ---
