@@ -77,7 +77,7 @@ data:
              "cluster_name": "mycluster",
              "metrics_collection_interval": 60,
               "namespace": {
-                "name": "amazon-cloudwatch"
+                "name": "K8S_NAMESPACE"
             }
         } 
        },
@@ -131,6 +131,11 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.hostIP
+            - name: K8S_NAMESPACE
+              valueFrom:
+               fieldRef:
+                 fieldPath: metadata.namespace
+
           # Please don't change the mountPath
           volumeMounts:
             - name: cwagentconfig
