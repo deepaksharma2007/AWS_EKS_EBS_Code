@@ -76,6 +76,9 @@ data:
           "kubernetes": {
              "cluster_name": "mycluster",
              "metrics_collection_interval": 60
+              "namespace": {
+                "name": "K8S_NAMESPACE"
+            }
         } 
        },
         "force_flush_interval": 5
