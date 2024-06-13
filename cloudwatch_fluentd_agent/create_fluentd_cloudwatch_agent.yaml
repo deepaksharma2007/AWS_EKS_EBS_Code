@@ -22,7 +22,7 @@ data:
       "logs": {
         "metrics_collected": {
           "kubernetes": {
-             "cluster_name": "mycluster"
+             "cluster_name": "mycluster",
              "metrics_collection_interval": 60
         } 
        },
